@@ -1,41 +1,62 @@
-﻿body
-{
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+﻿body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-input, textarea
-{
+input, textarea {
     font-size: 18px;
     width: 200px;
 }
-input[type=submit]
-{
-    width: auto;
-}
+
+    input[type=submit] {
+        width: auto;
+    }
+
 label {
-    font-size:16px;
+    font-size: 16px;
 }
 
-.product-props
-{
+.product-props {
     font-size: small;
 }
 
-ul.product-props{
-    list-style-type:none;
+ul.product-props {
+    list-style-type: none;
 }
 
-.product-info{
-    border:1px solid black;
+.product-info {
+    border: 1px solid black;
     display: inline-block;
     padding: 8px 2px;
-    width:450px;
+    width: 450px;
     background-color: lightgrey;
     border-radius: 5px;
 }
 
-.product-info img{
-    float:left;
-    border: 1px solid black;
-    max-width: 150px;
+    .product-info img {
+        float: left;
+        border: 1px solid black;
+        max-width: 150px;
+    }
+
+#loginToggle {
+    cursor: pointer;
 }
+
+.popup-form {
+    padding: 5px;
+    border: 2px solid black;
+    display: inline-block;
+}
+
+    .popup-form input {
+        width: 200px;
+    }
+
+    .popup-form label {
+        display: inline-block;
+        width: 150px;
+    }
+
+    .popup-form input[type=submit], .popup-form input[type=checkbox] {
+        width:auto;
+    }

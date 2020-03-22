@@ -28,6 +28,9 @@ namespace DutchTreat
             // the default behaviour tha the app can only navigate files inside wwwroot
             app.UseStaticFiles();
 
+            // use a middleware to get node package manager in your project
+            app.UseNodeModules();
+
         }
     }
 }
