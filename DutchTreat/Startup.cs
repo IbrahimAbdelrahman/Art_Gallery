@@ -16,14 +16,23 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // use this method to configure the order of the middleware to run through the HTTP request.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsEnvironment("Development"))
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // show error page
+            }
 
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             // make the application enable to navigate files
             // the default behaviour tha the app can only navigate files inside wwwroot
             app.UseStaticFiles();
@@ -31,6 +40,18 @@ namespace DutchTreat
             // use a middleware to get node package manager in your project
             app.UseNodeModules();
 
+            // Matches request to an endpoint.
+            app.UseRouting();
+
+            app.UseEndpoints(cfg =>
+            {
+                cfg.MapControllerRoute("Fallback",
+                    "{controller}/{action}/{id?}",
+                    new { controller = "App", action = "Index" }
+                    );
+            });
+
+            
         }
     }
 }

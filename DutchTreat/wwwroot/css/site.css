@@ -58,5 +58,14 @@ ul.product-props {
     }
 
     .popup-form input[type=submit], .popup-form input[type=checkbox] {
-        width:auto;
+        width: auto;
+    }
+
+menu li {
+    display: inline;
+    list-style-type: none;
+}
+
+    menu li:not(:last-child):after {
+        content: ' |';
     }
