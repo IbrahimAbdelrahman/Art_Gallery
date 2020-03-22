@@ -12,11 +12,15 @@ namespace DutchTreat.Controllers
         public IActionResult Index()
         {
             return View();
+
         }
 
+        // use attribute routing method
+       
         public IActionResult Contact()
         {
             ViewBag.Title = "Contact Us";
+            
             return View();
         }
         public IActionResult About()

@@ -17,19 +17,22 @@ namespace DutchTreat
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // use this method to configure the order of the middleware to run through the HTTP request.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsEnvironment("Development"))
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                // show error page
+                // show error page when you are not in the development
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             //app.UseDefaultFiles();
@@ -49,6 +52,7 @@ namespace DutchTreat
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action = "Index" }
                     );
+                cfg.MapRazorPages();
             });
 
             
