@@ -4,15 +4,16 @@
     <meta charset="utf-8" />
     <title>Dutch Treat: @ViewBag.Title</title>
     <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <h1> Welcome to our Art Gallery</h1>
         <menu>
             <ul>
-                <li> <a  asp-action="Index">Home</a> </li>
-                <li> <a  asp-action="Contact">Contact</a> </li>
-                <li> <a  asp-action="About">About</a> </li>
+                <li> <a asp-controller="app"  asp-action="Index">Home</a> </li>
+                <li> <a asp-controller="app"  asp-action="Contact">Contact</a> </li>
+                <li> <a asp-controller="app"  asp-action="About">About</a> </li>
             </ul>
         </menu>
     </header>
@@ -24,5 +25,8 @@
 
     <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="~/js/index.js"></script>
+    @* you don't want to include client-side validation in every page so you create section 
+       and give it false parameter to render only on the pages you specified*@
+    @RenderSection("Scripts", false)
 </body>
 </html>
