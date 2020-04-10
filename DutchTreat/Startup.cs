@@ -17,8 +17,8 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IMailService, NullMailService>();
             // support for real mail service 
+            services.AddTransient<IMailService, NullMailService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -33,7 +33,7 @@ namespace DutchTreat
             }
             else
             {
-                // show error page when you are not in the development
+                // show error page when you are not in the development mood
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
