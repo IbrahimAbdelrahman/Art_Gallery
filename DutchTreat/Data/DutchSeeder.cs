@@ -40,7 +40,7 @@ namespace DutchTreat.Data
                     {
                         new OrderItem()
                         {
-                            Product = products.First(),
+                            Product = products.FirstOrDefault(),
                             Quantity = 4,
                             ItemPrice = products.First().Price,
 

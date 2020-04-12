@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using DutchTreat.Data;
 using DutchTreat.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace DutchTreat
 {
@@ -30,8 +34,14 @@ namespace DutchTreat
             // inject DutchSeeder as a service
             services.AddTransient<DutchSeeder>();
 
+
+            // Add AutoMapper 
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
             // inject the repository in the service layer to use it 
             services.AddScoped<IDutchRepository, DutchRepository>();
+
+
             // add service to our project to tell him what database to use and make the 
             // DbContext part of service collection, so you can inject in different services 
             // like controller
@@ -39,10 +49,18 @@ namespace DutchTreat
             {
                 cfg.UseSqlServer(config.GetConnectionString("DutchConnectionString"));
             });
+
+
             // support for real mail service 
             services.AddTransient<IMailService, NullMailService>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             services.AddRazorPages();
         }
 

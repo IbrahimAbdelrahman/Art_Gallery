@@ -1,4 +1,5 @@
 ﻿using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,12 @@ namespace DutchTreat.Data
         public DutchContext Context { get; }
         public ILogger<DutchRepository> Logger { get; }
 
+        /////////////////////////////////////////////////////////////////////////
         public IEnumerable<Product> GetAllProducts()
         {
             try
             {
+                Logger.LogInformation("get all products called");
                 return Context.Products.OrderBy(p => p.Title).ToList();
             }
             catch (Exception ex)
@@ -32,7 +35,6 @@ namespace DutchTreat.Data
                 return null;
             }
         }
-
         public IEnumerable<Product> GetProductsByCategory(string category)
         {
             try
@@ -47,6 +49,49 @@ namespace DutchTreat.Data
             }
         }
 
+        /////////////////////////////////////////////////////////////////////////
+        public IEnumerable<Order> GetAllOrders()
+        {
+            try
+            {
+                Logger.LogInformation("get all orders called");
+                return Context.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(i => i.Product)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError($"Failed to get all orders: {ex}");
+                return null;
+            }
+        }
+        public Order GetOrderById(int id)
+        {
+            try
+            {
+                Logger.LogInformation("get the defined orders called");
+                return Context.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(i => i.Product)
+                    .Where( o => o.OrderId == id)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError($"Failed to get the defined order: {ex}");
+                return null;
+            }
+        }
+        public object AddEntity(object model)
+        {
+            Context.Add(model);
+            return model;
+        }
+        /////////////////////////////////////////////////////////////////////////
+
         public bool Save()
         {
             try
@@ -59,5 +104,7 @@ namespace DutchTreat.Data
                 return false;
             }
         }
+
+        
     }
 }
